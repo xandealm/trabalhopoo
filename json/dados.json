@@ -1,0 +1,78 @@
+{
+    "mesas": [
+        {
+            "numero": 1,
+            "valor_conta": 105.0,
+            "pedidos": [
+                {
+                    "id": 1,
+                    "nome": "Hamburguer",
+                    "valor": 25.0,
+                    "tipo": "Comida"
+                },
+                {
+                    "id": 2,
+                    "nome": "Suco",
+                    "valor": 10.0,
+                    "tipo": "Bebida"
+                },
+                {
+                    "id": 1,
+                    "nome": "Hamburguer",
+                    "valor": 25.0,
+                    "tipo": "Comida"
+                },
+                {
+                    "id": 2,
+                    "nome": "Suco",
+                    "valor": 10.0,
+                    "tipo": "Bebida"
+                },
+                {
+                    "id": 1,
+                    "nome": "Hamburguer",
+                    "valor": 25.0,
+                    "tipo": "Comida"
+                },
+                {
+                    "id": 2,
+                    "nome": "Suco",
+                    "valor": 10.0,
+                    "tipo": "Bebida"
+                }
+            ]
+        },
+        {
+            "numero": 2,
+            "valor_conta": 30.0,
+            "pedidos": [
+                {
+                    "id": 4,
+                    "nome": "Por\u00e7\u00e3o de fritas",
+                    "valor": 15.0,
+                    "tipo": "Comida"
+                },
+                {
+                    "id": 4,
+                    "nome": "Por\u00e7\u00e3o de fritas",
+                    "valor": 15.0,
+                    "tipo": "Comida"
+                }
+            ]
+        }
+    ],
+    "garcons": [
+        {
+            "nome": "Jo\u00e3o",
+            "pix": "joao@pix.com",
+            "valor_vendido": 30.0,
+            "valor_10": 3.0
+        },
+        {
+            "nome": "Carlos",
+            "pix": "carlos@pix.com",
+            "valor_vendido": 105.0,
+            "valor_10": 10.5
+        }
+    ]
+}
