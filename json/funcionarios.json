@@ -1,0 +1,12 @@
+[
+    {"id": "dono", "nome": "Guilherme", "senha": "admin123", "papel": "dono"},
+    {"id": "garcom1", "nome": "João", "senha": "garcom01", "papel": "garcom"},
+    {"id": "cozinheiro1", "nome": "Alexandre", "senha": "coz123", "papel": "cozinheiro"},
+    {"id": "garcom2", "nome": "Lucas", "senha": "garcom02", "papel": "garcom"},
+    {"id": "cozinheiro2", "nome": "Mariana", "senha": "coz456", "papel": "cozinheiro"},
+    {"id": "garcom3", "nome": "Carlos", "senha": "garcom03", "papel": "garcom"},
+    {"id": "cozinheiro3", "nome": "Fernanda", "senha": "coz789", "papel": "cozinheiro"},
+    {"id": "garcom4", "nome": "Ana", "senha": "garcom04", "papel": "garcom"},
+    {"id": "cozinheiro4", "nome": "Ricardo", "senha": "coz321", "papel": "cozinheiro"},
+    {"id": "garcom5", "nome": "Beatriz", "senha": "garcom05", "papel": "garcom"}
+]

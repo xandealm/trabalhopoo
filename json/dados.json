@@ -2,43 +2,28 @@
     "mesas": [
         {
             "numero": 1,
-            "valor_conta": 105.0,
+            "valor_conta": 70.0,
             "pedidos": [
                 {
                     "id": 1,
                     "nome": "Hamburguer",
                     "valor": 25.0,
-                    "tipo": "Comida"
+                    "tipo": "Comida",
+                    "status": "solicitado"
                 },
                 {
                     "id": 2,
                     "nome": "Suco",
                     "valor": 10.0,
-                    "tipo": "Bebida"
+                    "tipo": "Bebida",
+                    "status": "entregue"
                 },
                 {
-                    "id": 1,
-                    "nome": "Hamburguer",
-                    "valor": 25.0,
-                    "tipo": "Comida"
-                },
-                {
-                    "id": 2,
-                    "nome": "Suco",
-                    "valor": 10.0,
-                    "tipo": "Bebida"
-                },
-                {
-                    "id": 1,
-                    "nome": "Hamburguer",
-                    "valor": 25.0,
-                    "tipo": "Comida"
-                },
-                {
-                    "id": 2,
-                    "nome": "Suco",
-                    "valor": 10.0,
-                    "tipo": "Bebida"
+                    "id": 4,
+                    "nome": "Porção de fritas",
+                    "valor": 15.0,
+                    "tipo": "Comida",
+                    "status": "pronto"
                 }
             ]
         },
@@ -48,22 +33,24 @@
             "pedidos": [
                 {
                     "id": 4,
-                    "nome": "Por\u00e7\u00e3o de fritas",
+                    "nome": "Porção de fritas",
                     "valor": 15.0,
-                    "tipo": "Comida"
+                    "tipo": "Comida",
+                    "status": "solicitado"
                 },
                 {
-                    "id": 4,
-                    "nome": "Por\u00e7\u00e3o de fritas",
-                    "valor": 15.0,
-                    "tipo": "Comida"
+                    "id": 5,
+                    "nome": "Refrigerante",
+                    "valor": 8.0,
+                    "tipo": "Bebida",
+                    "status": "entregue"
                 }
             ]
         }
     ],
     "garcons": [
         {
-            "nome": "Jo\u00e3o",
+            "nome": "João",
             "pix": "joao@pix.com",
             "valor_vendido": 30.0,
             "valor_10": 3.0
@@ -73,6 +60,20 @@
             "pix": "carlos@pix.com",
             "valor_vendido": 105.0,
             "valor_10": 10.5
+        }
+    ],
+    "faturamento": [
+        {
+            "data": "2025-06-20",
+            "valor": 450.75
+        },
+        {
+            "data": "2025-06-21",
+            "valor": 780.50
+        },
+        {
+            "data": "2025-05-15",
+            "valor": 620.00
         }
     ]
 }

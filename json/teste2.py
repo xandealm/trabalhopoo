@@ -54,4 +54,4 @@ salvar_dados(dados)
 # Mostrar resultados
 listar_mesas(dados)
 listar_garcons(dados)
-print(f"\n💰 Total aberto no restaurante: R${calcular_total_aberto(dados):.2f}")
+print(f"\n Total aberto no restaurante: R${calcular_total_aberto(dados):.2f}")
