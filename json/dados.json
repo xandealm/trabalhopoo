@@ -2,78 +2,66 @@
     "mesas": [
         {
             "numero": 1,
-            "valor_conta": 70.0,
-            "pedidos": [
-                {
-                    "id": 1,
-                    "nome": "Hamburguer",
-                    "valor": 25.0,
-                    "tipo": "Comida",
-                    "status": "solicitado"
-                },
-                {
-                    "id": 2,
-                    "nome": "Suco",
-                    "valor": 10.0,
-                    "tipo": "Bebida",
-                    "status": "entregue"
-                },
-                {
-                    "id": 4,
-                    "nome": "Porção de fritas",
-                    "valor": 15.0,
-                    "tipo": "Comida",
-                    "status": "pronto"
-                }
-            ]
+            "valor_conta": 0.0,
+            "pedidos": []
         },
         {
             "numero": 2,
-            "valor_conta": 30.0,
-            "pedidos": [
-                {
-                    "id": 4,
-                    "nome": "Porção de fritas",
-                    "valor": 15.0,
-                    "tipo": "Comida",
-                    "status": "solicitado"
-                },
-                {
-                    "id": 5,
-                    "nome": "Refrigerante",
-                    "valor": 8.0,
-                    "tipo": "Bebida",
-                    "status": "entregue"
-                }
-            ]
+            "valor_conta": 0.0,
+            "pedidos": []
+        },
+        {
+            "numero": 3,
+            "valor_conta": 0.0,
+            "pedidos": []
+        },
+        {
+            "numero": 4,
+            "valor_conta": 0.0,
+            "pedidos": []
+        },
+        {
+            "numero": 5,
+            "valor_conta": 0.0,
+            "pedidos": []
+        },
+        {
+            "numero": 6,
+            "valor_conta": 0.0,
+            "pedidos": []
         }
+
     ],
     "garcons": [
         {
             "nome": "João",
-            "pix": "joao@pix.com",
-            "valor_vendido": 30.0,
-            "valor_10": 3.0
+            "pix": "joaoaugusto@hotmail.com",
+            "valor_vendido": 0.0,
+            "valor_10": 0.0
         },
         {
             "nome": "Carlos",
-            "pix": "carlos@pix.com",
-            "valor_vendido": 105.0,
-            "valor_10": 10.5
-        }
-    ],
-    "faturamento": [
-        {
-            "data": "2025-06-20",
-            "valor": 450.75
+            "pix": "carlosdias@gmail.com",
+            "valor_vendido": 0.0,
+            "valor_10": 0.0
         },
         {
-            "data": "2025-06-21",
-            "valor": 780.50
+            "nome": "Lucas",
+            "pix": "lucas13@gmail.com",
+            "valor_vendido": 0.0,
+            "valor_10": 0.0
         },
         {
-            "data": "2025-05-15",
-            "valor": 620.00
+            "nome": "Ana",
+            "pix": "anapaula@hotmail.com",
+            "valor_vendido": 0.0,
+            "valor_10": 0.0
+        },
+        {
+            "nome": "Beatriz",
+            "pix": "beatrizsilva@gmail.com",
+            "valor_vendido": 0.0,
+            "valor_10": 0.0
         }
     ]
 }
