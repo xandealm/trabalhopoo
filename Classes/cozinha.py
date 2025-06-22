@@ -1,5 +1,4 @@
 class Cozinha:
-    @staticmethod
     def listar_pedidos_para_preparo(mesas):
         resultado = []
         for mesa in mesas:
