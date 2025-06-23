@@ -1,14 +1,14 @@
 # dados.py
 import customtkinter as ctk
 from pathlib import Path
-from PIL import Image
+from PIL import Image, ImageTk
 import json
 from abc import ABC, abstractmethod
 
 class Dados(ABC):
     def __init__(self):
         self.dados_restaurante = self.carregar_dados_restaurante()
-        self.tela_inicial = None # Para guardar a referência da tela de login
+        self.tela_inicial = None
 
     @abstractmethod
     def gerar_dados_painel(self, papel=None):
@@ -18,7 +18,7 @@ class Dados(ABC):
         funcionarios = self.carregar_funcionarios()
 
         tela_inicial = ctk.CTk()
-        self.tela_inicial = tela_inicial  # para usar depois em abrir_painel
+        self.tela_inicial = tela_inicial 
         tela_inicial.title("Trabalho POO - Login")
         tela_inicial.geometry("800x600")
 
@@ -30,7 +30,6 @@ class Dados(ABC):
 
             if user in funcionarios and funcionarios[user]["senha"] == senha:
                 papel = funcionarios[user]["papel"]
-                # ALTERAÇÃO: Passar a instância atual (self) para a função abrir_painel
                 abrir_painel(papel, self) 
             else:
                 if not self.label_erro:
@@ -38,7 +37,6 @@ class Dados(ABC):
                     self.label_erro.pack(pady=10)
                 else:
                     self.label_erro.configure(text="ID ou senha incorretos!")
-                    # O .pack() não precisa ser chamado de novo se o widget já estiver na tela
         
         titulo_tela_inicial = ctk.CTkLabel(tela_inicial, text="Restaurante Bom de Garfo", font=("Arial", 32, "bold"))
         titulo_tela_inicial.pack(pady=50)
@@ -56,7 +54,7 @@ class Dados(ABC):
 
         try:
             script_dir = Path(__file__).parent
-            caminho_da_imagem = script_dir / "imagens" / "restaurante_bomdegarfoimg.png"
+            caminho_da_imagem = script_dir / "restaurante_bomdegarfoimg.png"
             imagem_restaurante = Image.open(caminho_da_imagem)
             imagem_ctk = ctk.CTkImage(light_image=imagem_restaurante, dark_image=imagem_restaurante, size=(150, 150))
             label_imagem = ctk.CTkLabel(tela_inicial, image=imagem_ctk, text='')
@@ -86,9 +84,7 @@ class Dados(ABC):
             print("Arquivo 'json/funcionarios.json' não encontrado.")
             return {}
 
-# ALTERAÇÃO: A função agora recebe 'app_instance' para poder fechar a janela anterior
 def abrir_painel(papel, app_instance):
-    # ALTERAÇÃO: Destruir a tela de login antes de abrir o painel
     if app_instance.tela_inicial:
         app_instance.tela_inicial.destroy()
 
