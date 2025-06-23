@@ -145,33 +145,28 @@ def abrir_painel_padrao(papel):
     painel.mainloop()
 
 def abrir_painel_cozinheiro():
-    painel = ctk.CTk()
-    painel.title("Painel do Cozinheiro")
-    painel.geometry("800x600")
+    janela_cozinheiro = ctk.CTkToplevel()
+    janela_cozinheiro.title("Painel do Cozinheiro")
+    janela_cozinheiro.geometry("400x300")
 
-    titulo = ctk.CTkLabel(painel, text="Painel do Cozinheiro", font=("Arial", 26, "bold"))
-    titulo.pack(pady=20)
-    
-    caixa_texto_pedidos = ctk.CTkTextbox(painel, font=("Arial", 16), width=700, height=350)
-    caixa_texto_pedidos.pack(pady=10)
-    
-    def atualizar_pedidos():
-        texto_pedidos = gerar_dados_painel("cozinheiro")
-        caixa_texto_pedidos.delete("1.0", "end")
-        caixa_texto_pedidos.insert("1.0", texto_pedidos)
-    
-    botao_atualizar = ctk.CTkButton(painel, text="Atualizar Pedidos", command=atualizar_pedidos, font=("Arial", 16))
-    botao_atualizar.pack(pady=10)
-    
-    def voltar_para_login():
-        painel.destroy()
-        criar_tela_login()
+    try:
+        with open("dados/pedidos.json", "r") as arquivo:
+            pedidos = json.load(arquivo)
+    except FileNotFoundError:
+        pedidos = []
 
-    botao_voltar = ctk.CTkButton(painel, text="Voltar para Tela Inicial", command=voltar_para_login, font=("Arial", 16))
-    botao_voltar.pack(side="bottom", pady=20)
-    
-    atualizar_pedidos()
-    painel.mainloop()
+    if not pedidos:
+        label = ctk.CTkLabel(janela_cozinheiro, text="Nenhum pedido no momento.")
+        label.pack(pady=10)
+    else:
+        for pedido in pedidos:
+            texto = f"Mesa {pedido['mesa']}: {pedido['descricao']}"
+            label = ctk.CTkLabel(janela_cozinheiro, text=texto)
+            label.pack(anchor="w", padx=10)
+
+    btn_fechar = ctk.CTkButton(janela_cozinheiro, text="Fechar", command=janela_cozinheiro.destroy)
+    btn_fechar.pack(pady=10)
+
 
 def abrir_painel_garcom():
     painel = ctk.CTk()
@@ -289,7 +284,7 @@ def criar_tela_login():
 
     try:
         script_dir = Path(__file__).parent
-        caminho_da_imagem = script_dir / "imagens" / "restaurante_bomdegarfoimg.png"
+        caminho_da_imagem = script_dir / "InterfaceGrafica" / "imagens" / "restaurante_bomdegarfoimg.png"
         imagem_restaurante = Image.open(caminho_da_imagem)
         imagem_ctk = ctk.CTkImage(light_image=imagem_restaurante, dark_image=imagem_restaurante, size=(150, 150))
         label_imagem = ctk.CTkLabel(tela_inicial, image=imagem_ctk, text='')

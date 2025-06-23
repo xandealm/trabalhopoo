@@ -1,0 +1,13 @@
+{
+    "dono": {"nome": "Guilherme", "senha": "admin123", "papel": "dono"},
+    "garcom1": {"nome": "João", "senha": "garcom01", "papel": "garcom"},
+    "cozinheiro1": {"nome": "Alexandre", "senha": "cozinheiro1", "papel": "cozinheiro"},
+    "garcom2": {"nome": "Lucas", "senha": "Lucas@17", "papel": "garcom"},
+    "cozinheiro2": {"nome": "Mariana", "senha": "cozinha9090", "papel": "cozinheiro"},
+    "garcom3": {"nome": "Carlos", "senha": "carlosgarçom", "papel": "garcom"},
+    "cozinheiro3": {"nome": "Fernanda", "senha": "fernandacozinheira98", "papel": "cozinheiro"},
+    "garcom4": {"nome": "Ana", "senha": "sol@mar", "papel": "garcom"},
+    "cozinheiro4": {"nome": "Ricardo", "senha": "*ricardo*", "papel": "cozinheiro"},
+    "garcom5": {"nome": "Beatriz", "senha": "bia_restaurante", "papel": "garcom"}
+  }
+  
