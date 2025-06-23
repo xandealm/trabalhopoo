@@ -190,6 +190,7 @@ def abrir_painel_garcom():
     entry_valor.pack(pady=(0, 15))
     label_status = ctk.CTkLabel(frame_adicionar, text="", font=("Arial", 14))
     label_status.pack(pady=(0, 10))
+    
     def adicionar_para_cozinha():
         num_mesa = entry_mesa.get()
         nome_pedido = entry_pedido.get()
@@ -252,6 +253,7 @@ def criar_tela_login():
     tela_inicial.geometry("800x600")
 
     label_erro = None
+    
     def entrar():
         nonlocal label_erro
         user = IDtxt.get()
