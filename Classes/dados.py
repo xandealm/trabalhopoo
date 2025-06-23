@@ -1,3 +1,4 @@
+# dados.py
 import customtkinter as ctk
 from pathlib import Path
 from PIL import Image
@@ -7,6 +8,7 @@ from abc import ABC, abstractmethod
 class Dados(ABC):
     def __init__(self):
         self.dados_restaurante = self.carregar_dados_restaurante()
+        self.tela_inicial = None # Para guardar a referência da tela de login
 
     @abstractmethod
     def gerar_dados_painel(self, papel=None):
@@ -28,15 +30,16 @@ class Dados(ABC):
 
             if user in funcionarios and funcionarios[user]["senha"] == senha:
                 papel = funcionarios[user]["papel"]
-                abrir_painel(papel)
+                # ALTERAÇÃO: Passar a instância atual (self) para a função abrir_painel
+                abrir_painel(papel, self) 
             else:
                 if not self.label_erro:
                     self.label_erro = ctk.CTkLabel(tela_inicial, text="ID ou senha incorretos", text_color="red", font=("Arial", 16))
                     self.label_erro.pack(pady=10)
                 else:
                     self.label_erro.configure(text="ID ou senha incorretos!")
-                    self.label_erro.pack(pady=10)
-
+                    # O .pack() não precisa ser chamado de novo se o widget já estiver na tela
+        
         titulo_tela_inicial = ctk.CTkLabel(tela_inicial, text="Restaurante Bom de Garfo", font=("Arial", 32, "bold"))
         titulo_tela_inicial.pack(pady=50)
 
@@ -59,7 +62,7 @@ class Dados(ABC):
             label_imagem = ctk.CTkLabel(tela_inicial, image=imagem_ctk, text='')
             label_imagem.pack(pady=20)
         except FileNotFoundError:
-            print("Imagem não encontrada")
+            print("Imagem 'imagens/restaurante_bomdegarfoimg.png' não encontrada")
 
         tela_inicial.mainloop()
 
@@ -72,19 +75,23 @@ class Dados(ABC):
             with open("json/dados.json", "r", encoding="utf-8") as f:
                 return json.load(f)
         except FileNotFoundError:
-            print("Arquivo de dados do restaurante não encontrado.")
-            return {"mesas": [], "garcons": []}
+            print("Arquivo 'json/dados.json' não encontrado. Criando um novo.")
+            return {"mesas": [{"numero": 1, "pedidos": [], "valor_conta": 0.0}], "garcons": []}
 
     def carregar_funcionarios(self):
         try:
             with open("json/funcionarios.json", "r", encoding="utf-8") as f:
                 return json.load(f)
         except FileNotFoundError:
-            print("Arquivo de funcionários não encontrado.")
+            print("Arquivo 'json/funcionarios.json' não encontrado.")
             return {}
 
-# Função para abrir o painel correto conforme o papel do usuário:
-def abrir_painel(papel):
+# ALTERAÇÃO: A função agora recebe 'app_instance' para poder fechar a janela anterior
+def abrir_painel(papel, app_instance):
+    # ALTERAÇÃO: Destruir a tela de login antes de abrir o painel
+    if app_instance.tela_inicial:
+        app_instance.tela_inicial.destroy()
+
     if papel == "garcom":
         from garcom import Garcom
         g = Garcom()

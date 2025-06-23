@@ -1,11 +1,9 @@
+# cozinha.py
 import customtkinter as ctk
-from pathlib import Path
-from PIL import Image
-import json
 from dados import Dados
+
 class Cozinha(Dados):
     def abrir_painel_cozinheiro(self):
-        d = Dados()
         painel = ctk.CTk()
         painel.title("Painel do Cozinheiro")
         painel.geometry("800x600")
@@ -17,32 +15,36 @@ class Cozinha(Dados):
         caixa_texto_pedidos.pack(pady=10)
         
         def atualizar_pedidos():
-            texto_pedidos = d.gerar_dados_painel("cozinheiro")
+            texto_pedidos = self.gerar_dados_painel() 
             caixa_texto_pedidos.delete("1.0", "end")
             caixa_texto_pedidos.insert("1.0", texto_pedidos)
         
         botao_atualizar = ctk.CTkButton(painel, text="Atualizar Pedidos", command=atualizar_pedidos, font=("Arial", 16))
         botao_atualizar.pack(pady=10)
         
-        def voltar_para_login():
-            painel.destroy()
-            d.criar_tela_login()
-
-        botao_voltar = ctk.CTkButton(painel, text="Voltar para Tela Inicial", command=voltar_para_login, font=("Arial", 16))
+        # --- BOTÃO VOLTAR COM LAMBDA ---
+        botao_voltar = ctk.CTkButton(
+            painel, 
+            text="Sair (Voltar para Tela de Login)", 
+            command=lambda: (painel.destroy(), self.criar_tela_login()), 
+            font=("Arial", 16),
+            fg_color="#DB3E39",
+            hover_color="#B7302B"
+        )
         botao_voltar.pack(side="bottom", pady=20)
         
         atualizar_pedidos()
         painel.mainloop()
 
-
-    def gerar_dados_painel(self):
+    def gerar_dados_painel(self, papel=None): 
         texto = "Solicitações de Pedidos:\n\n"
         pedidos_encontrados = False
+        self.dados_restaurante = self.carregar_dados_restaurante()
         for mesa in self.dados_restaurante["mesas"]:
             pedidos_da_mesa = []
             for pedido in mesa["pedidos"]:
                 if pedido.get("status") == "solicitado":
-                    pedidos_da_mesa.append(f"   • {pedido['nome']}")
+                    pedidos_da_mesa.append(f"    • {pedido['nome']}")
                     pedidos_encontrados = True
 
             if pedidos_da_mesa:

@@ -1,13 +1,10 @@
+# garcom.py
 import customtkinter as ctk
-from pathlib import Path
-from PIL import Image
-import json
 import random
 from dados import Dados
 
 class Garcom(Dados):
     def abrir_painel_garcom(self):
-        d = Dados()
         painel = ctk.CTk()
         painel.title("Painel do Garçom")
         painel.geometry("800x600")
@@ -15,7 +12,6 @@ class Garcom(Dados):
         frame_adicionar = ctk.CTkFrame(painel)
         frame_adicionar.pack(pady=10, padx=20, fill="x")
 
-        #Código para adicionar pedidos
         titulo_adicionar = ctk.CTkLabel(frame_adicionar, text="Adicionar Novo Pedido", font=("Arial", 20, "bold"))
         titulo_adicionar.pack(pady=(10, 15))
         ctk.CTkLabel(frame_adicionar, text="Número da Mesa:", font=("Arial", 16)).pack()
@@ -29,6 +25,7 @@ class Garcom(Dados):
         entry_valor.pack(pady=(0, 15))
         label_status = ctk.CTkLabel(frame_adicionar, text="", font=("Arial", 14))
         label_status.pack(pady=(0, 10))
+
         def adicionar_para_cozinha():
             num_mesa = entry_mesa.get()
             nome_pedido = entry_pedido.get()
@@ -42,7 +39,8 @@ class Garcom(Dados):
             except ValueError:
                 label_status.configure(text="Erro: Mesa e Valor devem ser números!", text_color="red")
                 return
-            dados_atuais = d.carregar_dados_restaurante()
+            
+            dados_atuais = self.carregar_dados_restaurante()
             mesa_encontrada = False
             for mesa in dados_atuais["mesas"]:
                 if mesa["numero"] == num_mesa:
@@ -51,45 +49,53 @@ class Garcom(Dados):
                     mesa["valor_conta"] += valor_pedido
                     mesa_encontrada = True
                     break
+            
             if not mesa_encontrada:
                 label_status.configure(text=f"Erro: Mesa {num_mesa} não encontrada!", text_color="red")
                 return
-            d.salvar_dados_restaurante(dados_atuais)
+            
+            self.salvar_dados_restaurante(dados_atuais)
             label_status.configure(text=f"Pedido '{nome_pedido}' enviado para a cozinha!", text_color="green")
             entry_mesa.delete(0, 'end')
             entry_pedido.delete(0, 'end')
             entry_valor.delete(0, 'end')
-            # Atualiza o painel de pedidos prontos
-            texto_prontos = self.gerar_dados_painel("garcom")
+            
+            texto_prontos = self.gerar_dados_painel()
             label_prontos.configure(text=texto_prontos)
+
         botao_adicionar = ctk.CTkButton(frame_adicionar, text="Adicionar para a Cozinha", command=adicionar_para_cozinha, font=("Arial", 16))
         botao_adicionar.pack(pady=10)
         
         frame_visualizar = ctk.CTkFrame(painel)
         frame_visualizar.pack(pady=10, padx=20, fill="both", expand=True)
-        titulo_visualizar = ctk.CTkLabel(frame_visualizar, text="Pedidos Prontos para Entrega", font=("Arial", 18, "bold"))
+        titulo_visualizar = ctk.CTkLabel(frame_visualizar, text="Pedidos Solicitados na Cozinha", font=("Arial", 18, "bold"))
         titulo_visualizar.pack(pady=10)
-        texto_prontos = self.gerar_dados_painel("garcom")
+        texto_prontos = self.gerar_dados_painel()
         label_prontos = ctk.CTkLabel(frame_visualizar, text=texto_prontos, font=("Arial", 16), justify="left")
         label_prontos.pack(pady=10)
         
-        def voltar_para_login():
-            painel.destroy()
-            d.criar_tela_login()
-            
-        botao_voltar = ctk.CTkButton(painel, text="Voltar para Tela Inicial", command=voltar_para_login, font=("Arial", 16))
+        # --- BOTÃO VOLTAR COM LAMBDA ---
+        botao_voltar = ctk.CTkButton(
+            painel, 
+            text="Sair (Voltar para Tela de Login)", 
+            command=lambda: (painel.destroy(), self.criar_tela_login()), 
+            font=("Arial", 16),
+            fg_color="#DB3E39",
+            hover_color="#B7302B"
+        )
         botao_voltar.pack(side="bottom", pady=20)
 
         painel.mainloop()
 
-    def gerar_dados_painel(self):
+    def gerar_dados_painel(self, papel=None):
         texto = "Pedidos Solicitados:\n\n"
         pedidos_encontrados = False
+        self.dados_restaurante = self.carregar_dados_restaurante()
         for mesa in self.dados_restaurante.get("mesas", []):
             pedidos_da_mesa = []
             for pedido in mesa.get("pedidos", []):
                 if pedido.get("status") == "solicitado":
-                    pedidos_da_mesa.append(f"   • {pedido['nome']}")
+                    pedidos_da_mesa.append(f"    • {pedido['nome']}")
                     pedidos_encontrados = True
 
             if pedidos_da_mesa:

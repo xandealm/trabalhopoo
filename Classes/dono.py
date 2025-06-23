@@ -1,6 +1,5 @@
+# dono.py
 import customtkinter as ctk
-from pathlib import Path
-from PIL import Image
 from dados import Dados
 
 class Dono(Dados):
@@ -8,7 +7,6 @@ class Dono(Dados):
         super().__init__()
 
     def abrir_painel_padrao(self, papel):
-        d = Dono()  # melhor usar o self, mas aqui cria outra instância para salvar dados
         painel = ctk.CTk()
         painel.title(f"Painel do {papel.capitalize()}")
         painel.geometry("800x600")
@@ -28,14 +26,14 @@ class Dono(Dados):
             status_label.pack(pady=5)
 
             def executar_zeramento():
-                dados = d.carregar_dados_restaurante()
+                dados = self.carregar_dados_restaurante()
                 for mesa in dados["mesas"]:
                     mesa["pedidos"] = []
                     mesa["valor_conta"] = 0.0
                 for garcom in dados["garcons"]:
                     garcom["valor_vendido"] = 0.0
                     garcom["valor_10"] = 0.0
-                d.salvar_dados_restaurante(dados)
+                self.salvar_dados_restaurante(dados)
 
                 conteudo.configure(text=self.gerar_dados_painel("dono"))
                 status_label.configure(text="Expediente zerado", text_color="green")
@@ -62,21 +60,26 @@ class Dono(Dados):
                 font=("Arial", 16)
             )
 
-        def voltar_para_login():
-            painel.destroy()
-            d.criar_tela_login()
-
-        botao_voltar = ctk.CTkButton(painel, text="Voltar para Tela Inicial", command=voltar_para_login, font=("Arial", 16))
+        # --- BOTÃO VOLTAR COM LAMBDA ---
+        botao_voltar = ctk.CTkButton(
+            painel, 
+            text="Sair (Voltar para Tela de Login)",
+            command=lambda: (painel.destroy(), self.criar_tela_login()), 
+            font=("Arial", 16),
+            fg_color="#DB3E39",
+            hover_color="#B7302B"
+        )
         botao_voltar.pack(side="bottom", pady=20)
-
+        
         painel.mainloop()
 
     def gerar_dados_painel(self, papel=None):
+        self.dados_restaurante = self.carregar_dados_restaurante()
         faturamento_total = sum(mesa["valor_conta"] for mesa in self.dados_restaurante.get("mesas", []))
         texto = f"Faturamento do Dia: R$ {faturamento_total:.2f}\n\n"
 
         texto += "Comissões dos Garçons:\n"
         if "garcons" in self.dados_restaurante and self.dados_restaurante["garcons"]:
             for g in self.dados_restaurante["garcons"]:
-                texto += f"   • {g['nome']}: R$ {g['valor_10']:.2f} (Total Vendido: R$ {g['valor_vendido']:.2f})\n"
+                texto += f"    • {g['nome']}: R$ {g.get('valor_10', 0.0):.2f} (Total Vendido: R$ {g.get('valor_vendido', 0.0):.2f})\n"
         return texto
