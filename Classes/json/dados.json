@@ -34,30 +34,35 @@
     "garcons": [
         {
             "nome": "João",
+            "id": "garcom1",
             "pix": "joaoaugusto@hotmail.com",
-            "valor_vendido": 0.0,
-            "valor_10": 0.0
+            "valor_vendido": 123.0,
+            "valor_10": 12.3
         },
         {
             "nome": "Carlos",
+            "id": "garcom2",
             "pix": "carlosdias@gmail.com",
             "valor_vendido": 0.0,
             "valor_10": 0.0
         },
         {
             "nome": "Lucas",
+            "id": "garcom3",
             "pix": "lucas13@gmail.com",
             "valor_vendido": 0.0,
             "valor_10": 0.0
         },
         {
             "nome": "Ana",
+            "id": "garcom4",
             "pix": "anapaula@hotmail.com",
             "valor_vendido": 0.0,
             "valor_10": 0.0
         },
         {
             "nome": "Beatriz",
+            "id": "garcom5",
             "pix": "beatrizsilva@gmail.com",
             "valor_vendido": 0.0,
             "valor_10": 0.0

@@ -30,15 +30,20 @@ class Dados(ABC):
 
             if user in funcionarios and funcionarios[user]["senha"] == senha:
                 papel = funcionarios[user]["papel"]
-                abrir_painel(papel, self) 
+                abrir_painel(papel, self, user)  # Passa o ID do usuário aqui
             else:
                 if not self.label_erro:
-                    self.label_erro = ctk.CTkLabel(tela_inicial, text="ID ou senha incorretos", text_color="red", font=("Arial", 16))
+                    self.label_erro = ctk.CTkLabel(
+                        tela_inicial, text="ID ou senha incorretos",
+                        text_color="red", font=("Arial", 16)
+                    )
                     self.label_erro.pack(pady=10)
                 else:
                     self.label_erro.configure(text="ID ou senha incorretos!")
-        
-        titulo_tela_inicial = ctk.CTkLabel(tela_inicial, text="Restaurante Bom de Garfo", font=("Arial", 32, "bold"))
+
+        titulo_tela_inicial = ctk.CTkLabel(
+            tela_inicial, text="Restaurante Bom de Garfo", font=("Arial", 32, "bold")
+        )
         titulo_tela_inicial.pack(pady=50)
 
         ctk.CTkLabel(tela_inicial, text="Digite seu ID:", font=("Arial", 22)).pack()
@@ -84,21 +89,25 @@ class Dados(ABC):
             print("Arquivo 'json/funcionarios.json' não encontrado.")
             return {}
 
-def abrir_painel(papel, app_instance):
+# ---- Função para abrir o painel do funcionário logado ----
+def abrir_painel(papel, app_instance, id_usuario):
     if app_instance.tela_inicial:
         app_instance.tela_inicial.destroy()
 
     if papel == "garcom":
         from garcom import Garcom
-        g = Garcom()
+        g = Garcom(id_garcom=id_usuario)  # Passa o ID do garçom
         g.abrir_painel_garcom()
+
     elif papel == "dono":
         from dono import Dono
         d = Dono()
         d.abrir_painel_padrao("dono")
+
     elif papel == "cozinheiro":
         from cozinha import Cozinha
         c = Cozinha()
         c.abrir_painel_cozinheiro()
+
     else:
         print(f"Papel '{papel}' desconhecido. Não é possível abrir painel.")
