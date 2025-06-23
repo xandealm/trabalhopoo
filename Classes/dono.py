@@ -84,7 +84,7 @@ class Dono(Dados):
         for mesa in self.dados_restaurante.get("mesas", []):
             valor_mesa = mesa.get("valor_conta", 0)
             texto += f"    • Mesa {mesa['numero']}: R$ {valor_mesa:.2f}\n"
-        texto += "\n\n Comissões dos Garçons:"
+        texto += "\n\n Comissões dos Garçons:\n"
         if "garcons" in self.dados_restaurante and self.dados_restaurante["garcons"]:
             for g in self.dados_restaurante["garcons"]:
                 texto += f"    • {g['nome']}: R$ {g.get('valor_10', 0.0):.2f} (Total Vendido: R$ {g.get('valor_vendido', 0.0):.2f})\n"
