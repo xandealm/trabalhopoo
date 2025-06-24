@@ -1,13 +1,24 @@
 # dados.py
 import customtkinter as ctk
 from pathlib import Path
-from PIL import Image, ImageTk
+from PIL import Image
 import json
 from abc import ABC, abstractmethod
+
+class Funcionario:
+    def __init__(self, id_func, nome, senha, papel):
+        self.id = id_func
+        self.nome = nome
+        self._senha = senha  # Apenas a senha está encapsulada
+        self.papel = papel
+
+    def verificar_senha(self, senha_digitada):
+        return self._senha == senha_digitada
 
 class Dados(ABC):
     def __init__(self):
         self.dados_restaurante = self.carregar_dados_restaurante()
+        self.funcionarios = self.carregar_funcionarios()
         self.tela_inicial = None
 
     @abstractmethod
@@ -15,10 +26,8 @@ class Dados(ABC):
         pass
 
     def criar_tela_login(self):
-        funcionarios = self.carregar_funcionarios()
-
         tela_inicial = ctk.CTk()
-        self.tela_inicial = tela_inicial 
+        self.tela_inicial = tela_inicial
         tela_inicial.title("Trabalho POO - Login")
         tela_inicial.geometry("800x600")
 
@@ -28,9 +37,9 @@ class Dados(ABC):
             user = IDtxt.get()
             senha = senhatxt.get()
 
-            if user in funcionarios and funcionarios[user]["senha"] == senha:
-                papel = funcionarios[user]["papel"]
-                abrir_painel(papel, self, user)  # Passa o ID do usuário aqui
+            funcionario = self.funcionarios.get(user)
+            if funcionario and funcionario.verificar_senha(senha):
+                abrir_painel(funcionario.papel, self, user)
             else:
                 if not self.label_erro:
                     self.label_erro = ctk.CTkLabel(
@@ -41,10 +50,9 @@ class Dados(ABC):
                 else:
                     self.label_erro.configure(text="ID ou senha incorretos!")
 
-        titulo_tela_inicial = ctk.CTkLabel(
+        ctk.CTkLabel(
             tela_inicial, text="Restaurante Bom de Garfo", font=("Arial", 32, "bold")
-        )
-        titulo_tela_inicial.pack(pady=50)
+        ).pack(pady=50)
 
         ctk.CTkLabel(tela_inicial, text="Digite seu ID:", font=("Arial", 22)).pack()
         IDtxt = ctk.CTkEntry(tela_inicial)
@@ -54,18 +62,18 @@ class Dados(ABC):
         senhatxt = ctk.CTkEntry(tela_inicial, show="*")
         senhatxt.pack(pady=30)
 
-        botao_entrar = ctk.CTkButton(tela_inicial, text="Entrar", command=entrar)
-        botao_entrar.pack(pady=20)
+        ctk.CTkButton(tela_inicial, text="Entrar", command=entrar).pack(pady=20)
 
         try:
             script_dir = Path(__file__).parent
             caminho_da_imagem = script_dir / "restaurante_bomdegarfoimg.png"
             imagem_restaurante = Image.open(caminho_da_imagem)
-            imagem_ctk = ctk.CTkImage(light_image=imagem_restaurante, dark_image=imagem_restaurante, size=(150, 150))
-            label_imagem = ctk.CTkLabel(tela_inicial, image=imagem_ctk, text='')
-            label_imagem.pack(pady=20)
+            imagem_ctk = ctk.CTkImage(
+                light_image=imagem_restaurante, dark_image=imagem_restaurante, size=(150, 150)
+            )
+            ctk.CTkLabel(tela_inicial, image=imagem_ctk, text='').pack(pady=20)
         except FileNotFoundError:
-            print("Imagem 'imagens/restaurante_bomdegarfoimg.png' não encontrada")
+            print("Imagem 'restaurante_bomdegarfoimg.png' não encontrada")
 
         tela_inicial.mainloop()
 
@@ -82,12 +90,21 @@ class Dados(ABC):
             return {"mesas": [{"numero": 1, "pedidos": [], "valor_conta": 0.0}], "garcons": []}
 
     def carregar_funcionarios(self):
+        funcionarios = {}
         try:
             with open("json/funcionarios.json", "r", encoding="utf-8") as f:
-                return json.load(f)
+                dados_json = json.load(f)
+                for id_func, dados in dados_json.items():
+                    funcionario = Funcionario(
+                        id_func=id_func,
+                        nome=dados["nome"],
+                        senha=dados["senha"],
+                        papel=dados["papel"]
+                    )
+                    funcionarios[id_func] = funcionario
         except FileNotFoundError:
             print("Arquivo 'json/funcionarios.json' não encontrado.")
-            return {}
+        return funcionarios
 
 # ---- Função para abrir o painel do funcionário logado ----
 def abrir_painel(papel, app_instance, id_usuario):
@@ -96,7 +113,7 @@ def abrir_painel(papel, app_instance, id_usuario):
 
     if papel == "garcom":
         from garcom import Garcom
-        g = Garcom(id_garcom=id_usuario)  # Passa o ID do garçom
+        g = Garcom(id_garcom=id_usuario)
         g.abrir_painel_garcom()
 
     elif papel == "dono":

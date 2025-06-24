@@ -17,8 +17,16 @@
         },
         {
             "numero": 4,
-            "valor_conta": 0.0,
-            "pedidos": []
+            "valor_conta": 26.2,
+            "pedidos": [
+                {
+                    "id": 1233,
+                    "nome": "Hambúrguer",
+                    "valor": 26.2,
+                    "tipo": "Comida",
+                    "status": "solicitado"
+                }
+            ]
         },
         {
             "numero": 5,
@@ -36,8 +44,8 @@
             "nome": "João",
             "id": "garcom1",
             "pix": "joaoaugusto@hotmail.com",
-            "valor_vendido": 123.0,
-            "valor_10": 12.3
+            "valor_vendido": 149.2,
+            "valor_10": 14.920000000000002
         },
         {
             "nome": "Carlos",

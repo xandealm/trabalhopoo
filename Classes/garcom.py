@@ -1,4 +1,4 @@
-# garcom.py (versão compacta)
+# garcom.py
 import customtkinter as ctk
 import random
 from dados import Dados
